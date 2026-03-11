@@ -1132,7 +1132,7 @@ nav.scrolled {
     <!-- Tabs -->
     <div style="display:flex; justify-content:center; margin-bottom:36px;" class="fade-in">
       <div style="display:flex; gap:8px; background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:6px;">
-        <button class="rl-tab active" onclick="switchRlTab('spielzeit', this)"><i class="fas fa-clock"></i> Spielzeit</button>
+        <button class="rl-tab active" onclick="switchRlTab('Spielzeit', this)"><i class="fas fa-clock"></i> All-Time</button>
         <button class="rl-tab" onclick="switchRlTab('heute', this)"><i class="fas fa-calendar-day"></i> Heute aktiv</button>
       </div>
     </div>
@@ -1730,64 +1730,91 @@ function closeMenu() {
 function switchRlTab(id, btn) {
   document.querySelectorAll('.rl-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+
+  // Beim Tab-Wechsel passende Rangliste laden
+  if (id === 'spielzeit') {
+    loadRanglisteAlltime();
+  } else if (id === 'heute') {
+    loadRanglisteToday();
+  }
 }
+
 </script>
-  
 <script>
 // ══════════════════════════════════════════════════════════
-// PlaytimeTrackerPro - Today-Top10 von Cloudflare Worker
+// PlaytimeTrackerPro - Rangliste (Alltime + Today)
 // ══════════════════════════════════════════════════════════
 
+// Gemeinsame Referenz für Balken
 let maxPlaytimeMinutes = 0;
 
-async function loadRanglisteData() {
+// -------- Gemeinsamer Renderer --------
+function renderRangliste(players) {
+  if (!players || players.length === 0) {
+    console.warn('Keine Spieler-Daten vorhanden');
+    return;
+  }
+
+  maxPlaytimeMinutes = parsePlaytime(players[0].playtime);
+
+  // Top 3
+  if (players.length >= 1) updatePodiumPlayer(1, players[0]);
+  if (players.length >= 2) updatePodiumPlayer(2, players[1]);
+  if (players.length >= 3) updatePodiumPlayer(3, players[2]);
+
+  // Liste 4–10
+  const listRows = document.querySelectorAll('.rl-list .rl-row');
+
+  listRows.forEach(row => {
+    const nameEl = row.querySelector('.rl-name');
+    const statEl = row.querySelector('.rl-stat');
+    const barEl  = row.querySelector('.rl-bar');
+    if (nameEl) nameEl.textContent = 'Kein Spieler';
+    if (statEl) statEl.textContent = '';
+    if (barEl)  barEl.style.width = '0%';
+  });
+
+  for (let i = 3; i < Math.min(players.length, 10); i++) {
+    const rowIndex = i - 3;
+    if (listRows[rowIndex]) {
+      updateListRow(listRows[rowIndex], i + 1, players[i]);
+    }
+  }
+}
+
+// -------- Loader: Alltime --------
+async function loadRanglisteAlltime() {
+  try {
+    const response = await fetch('https://playtime-sync.novamc26.workers.dev/top10');
+    if (!response.ok) {
+      console.warn('Alltime-Top10 noch nicht verfügbar');
+      return;
+    }
+    const players = await response.json();
+    console.log('✅ Alltime-Rangliste geladen:', players.length, 'Spieler');
+    renderRangliste(players);
+  } catch (error) {
+    console.error('❌ Fehler beim Laden der Alltime-Rangliste:', error);
+  }
+}
+
+// -------- Loader: Today --------
+async function loadRanglisteToday() {
   try {
     const response = await fetch('https://playtime-sync.novamc26.workers.dev/top10-today');
-
     if (!response.ok) {
-      console.warn('top10-today noch nicht verfügbar - Plugin läuft vermutlich noch nicht');
+      console.warn('Top10-today noch nicht verfügbar');
       return;
     }
-
     const players = await response.json();
-
-    if (!players || players.length === 0) {
-      console.warn('Keine Spieler-Daten (today) vorhanden');
-      return;
-    }
-
     console.log('✅ Today-Rangliste geladen:', players.length, 'Spieler');
-
-    maxPlaytimeMinutes = parsePlaytime(players[0].playtime);
-
-    if (players.length >= 1) updatePodiumPlayer(1, players[0]);
-    if (players.length >= 2) updatePodiumPlayer(2, players[1]);
-    if (players.length >= 3) updatePodiumPlayer(3, players[2]);
-
-    const listRows = document.querySelectorAll('.rl-list .rl-row');
-
-    listRows.forEach(row => {
-      const nameEl = row.querySelector('.rl-name');
-      const statEl = row.querySelector('.rl-stat');
-      const barEl  = row.querySelector('.rl-bar');
-      if (nameEl) nameEl.textContent = 'Kein Spieler';
-      if (statEl) statEl.textContent = '';
-      if (barEl)  barEl.style.width = '0%';
-    });
-
-    for (let i = 3; i < Math.min(players.length, 10); i++) {
-      const rowIndex = i - 3;
-      if (listRows[rowIndex]) {
-        updateListRow(listRows[rowIndex], i + 1, players[i]);
-      }
-    }
-
-    console.log('✅ Today-Rangliste erfolgreich aktualisiert!');
+    renderRangliste(players);
   } catch (error) {
     console.error('❌ Fehler beim Laden der Today-Rangliste:', error);
   }
 }
 
+// -------- Rendering-Helfer --------
 function updatePodiumPlayer(rank, player) {
   const podiumCard = document.querySelector(`.podium-${rank}`);
   if (!podiumCard) return;
@@ -1836,8 +1863,8 @@ function updateListRow(row, rank, player) {
       img.style.height = '36px';
       img.style.borderRadius = '50%';
       img.onerror = function() {
-        const emojis = ['⛔', '⛔', '⛔', '⛔', '⛔', '⛔', '⛔'];
-        this.outerHTML = emojis[rank - 4] || '⛔';
+        const emojis = ['🏗️', '🏠', '🌆', '⚒️', '🔧', '🏡', '🌇'];
+        this.outerHTML = emojis[rank - 4] || '🎮';
       };
       avatarEl.innerHTML = '';
       avatarEl.appendChild(img);
@@ -1879,20 +1906,32 @@ function parsePlaytime(timeStr) {
   return days * 1440 + hours * 60 + minutes;
 }
 
+// -------- Auto-Load & Auto-Refresh --------
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🚀 Today-Rangliste Auto-Sync gestartet');
-  loadRanglisteData();
+  console.log('🚀 Rangliste Auto-Sync gestartet (Alltime zuerst)');
+  loadRanglisteAlltime(); // Standard: Gesamt-Spielzeit
 });
 
 setInterval(() => {
-  console.log('🔄 Today-Rangliste wird aktualisiert...');
-  loadRanglisteData();
+  const active = document.querySelector('.rl-tab.active');
+  if (!active) return;
+
+  if (active.textContent.includes('Heute')) {
+    loadRanglisteToday();
+  } else {
+    loadRanglisteAlltime();
+  }
 }, 5 * 60 * 1000);
 
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) {
-    console.log('👁️ Tab wieder aktiv - Today-Rangliste neu laden');
-    loadRanglisteData();
+    const active = document.querySelector('.rl-tab.active');
+    if (!active) return;
+    if (active.textContent.includes('Heute')) {
+      loadRanglisteToday();
+    } else {
+      loadRanglisteAlltime();
+    }
   }
 });
 </script>
