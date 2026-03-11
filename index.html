@@ -1178,7 +1178,7 @@ nav.scrolled {
       </div>
 
       <p style="text-align:center; font-size:0.8rem; color:var(--text-muted); margin-top:24px; opacity:0.6;">
-        <i class="fas fa-sync-alt"></i> Wird automatisch durch unser System aktualisiert
+        <i class="fas fa-sync-alt"></i> Wird automatisch durch NovaTime aktualisiert
       </p>
     </div>
   </section>
@@ -1750,10 +1750,20 @@ let maxPlaytimeMinutes = 0;
 
 // -------- Gemeinsamer Renderer --------
 function renderRangliste(players) {
-  if (!players || players.length === 0) {
-    console.warn('Keine Spieler-Daten vorhanden');
-    return;
-  }
+  // Podium + Liste komplett zurücksetzen
+  const podiumCards = document.querySelectorAll('.podium-card');
+  podiumCards.forEach(card => {
+    const nameEl = card.querySelector('.podium-name');
+    const timeEl = card.querySelector('.podium-time');
+    const avatar = card.querySelector('.podium-avatar');
+    if (nameEl) nameEl.textContent = 'Spieler';
+    if (timeEl) timeEl.innerHTML = '<i class="fas fa-clock"></i> 0';
+    if (avatar) {
+      avatar.innerHTML = '⭐';
+      avatar.style.backgroundImage = '';
+    }
+  });
+
 
   maxPlaytimeMinutes = parsePlaytime(players[0].playtime);
 
