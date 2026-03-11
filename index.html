@@ -1131,11 +1131,12 @@ nav.scrolled {
 
     <!-- Tabs -->
     <div style="display:flex; justify-content:center; margin-bottom:36px;" class="fade-in">
-      <div style="display:flex; gap:8px; background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:6px;">
-        <button class="rl-tab active" onclick="switchRlTab('Spielzeit', this)"><i class="fas fa-clock"></i> All-Time</button>
-        <button class="rl-tab" onclick="switchRlTab('heute', this)"><i class="fas fa-calendar-day"></i> Heute aktiv</button>
-      </div>
-    </div>
+  <div style="display:flex; gap:8px; background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:6px;">
+    <button class="rl-tab active" onclick="switchRlTab('alltime', this)"><i class="fas fa-clock"></i> All-Time</button>
+    <button class="rl-tab" onclick="switchRlTab('today', this)"><i class="fas fa-calendar-day"></i> Heute aktiv</button>
+  </div>
+</div>
+
 
     <!-- Leaderboard -->
     <div style="max-width:860px; margin:0 auto;" class="fade-in">
@@ -2090,7 +2091,6 @@ function updateListRow(row, rank, player) {
     });
   }
 }
-
 // ===== Loader: Alltime =====
 async function loadRanglisteAlltime() {
   try {
@@ -2123,6 +2123,22 @@ async function loadRanglisteToday() {
   }
 }
 
+// ===== Tab-Wechsel =====
+function switchRlTab(mode) {
+  const tabAll = document.getElementById('rl-tab-alltime');
+  const tabToday = document.getElementById('rl-tab-today');
+  if (!tabAll || !tabToday) return;
+
+  tabAll.classList.toggle('active', mode === 'alltime');
+  tabToday.classList.toggle('active', mode === 'today');
+
+  if (mode === 'today') {
+    loadRanglisteToday();
+  } else {
+    loadRanglisteAlltime();
+  }
+}
+
 // ===== Auto-Load & Auto-Refresh =====
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🚀 Rangliste Auto-Sync gestartet (Alltime zuerst)');
@@ -2131,10 +2147,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // alle 5 Minuten neu laden, abhängig vom aktiven Tab
 setInterval(() => {
-  const active = document.querySelector('.rl-tab.active');
-  if (!active) return;
+  const tabAll = document.getElementById('rl-tab-alltime');
+  const tabToday = document.getElementById('rl-tab-today');
+  if (!tabAll || !tabToday) return;
 
-  if (active.textContent.includes('Heute')) {
+  if (tabToday.classList.contains('active')) {
     loadRanglisteToday();
   } else {
     loadRanglisteAlltime();
@@ -2143,15 +2160,19 @@ setInterval(() => {
 
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) {
-    const active = document.querySelector('.rl-tab.active');
-    if (!active) return;
-    if (active.textContent.includes('Heute')) {
+    const tabAll = document.getElementById('rl-tab-alltime');
+    const tabToday = document.getElementById('rl-tab-today');
+    if (!tabAll || !tabToday) return;
+
+    if (tabToday.classList.contains('active')) {
       loadRanglisteToday();
     } else {
       loadRanglisteAlltime();
     }
   }
 });
+
+
 </script>
 </body>
 </html>
