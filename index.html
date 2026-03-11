@@ -1732,9 +1732,10 @@ function switchRlTab(id, btn) {
   btn.classList.add('active');
 }
 
+<script>
 // ══════════════════════════════════════════════════════════
 // PlaytimeTrackerPro - Auto-Sync Script für novamc.one
-// Lädt top10-total.json und updated die Rangliste automatisch
+// Lädt HEUTE-Top10 aus dem Worker (/top10-today)
 // ══════════════════════════════════════════════════════════
 
 // Referenz für maximale Spielzeit (Platz 1)
@@ -1742,22 +1743,22 @@ let maxPlaytimeMinutes = 0;
 
 async function loadRanglisteData() {
   try {
-    // JSON vom Server laden
-    const response = await fetch('https://playtime-sync.novamc26.workers.dev/top10');
-    
+    // JSON vom Worker laden – HEUTE-Endpoint
+    const response = await fetch('https://playtime-sync.novamc26.workers.dev/top10-today');
+
     if (!response.ok) {
-      console.warn('top10-total.json noch nicht verfügbar - Plugin läuft vermutlich noch nicht');
-      return;
-    }
-    
-    const players = await response.json();
-    
-    if (!players || players.length === 0) {
-      console.warn('Keine Spieler-Daten vorhanden');
+      console.warn('top10-today noch nicht verfügbar - Plugin läuft vermutlich noch nicht');
       return;
     }
 
-    console.log('✅ Rangliste geladen:', players.length, 'Spieler');
+    const players = await response.json();
+
+    if (!players || players.length === 0) {
+      console.warn('Keine Spieler-Daten (today) vorhanden');
+      return;
+    }
+
+    console.log('✅ Today-Rangliste geladen:', players.length, 'Spieler');
 
     // Platz 1 als 100%-Referenz für Balken setzen
     maxPlaytimeMinutes = parsePlaytime(players[0].playtime);
@@ -1795,10 +1796,10 @@ async function loadRanglisteData() {
       }
     }
 
-    console.log('✅ Rangliste erfolgreich aktualisiert!');
-    
+    console.log('✅ Today-Rangliste erfolgreich aktualisiert!');
+
   } catch (error) {
-    console.error('❌ Fehler beim Laden der Rangliste:', error);
+    console.error('❌ Fehler beim Laden der Today-Rangliste:', error);
   }
 }
 
@@ -1812,7 +1813,7 @@ function updatePodiumPlayer(rank, player) {
   if (avatar) {
     const size = rank === 1 ? 80 : 64;
     const imgUrl = `https://minotar.net/helm/${player.uuid}/${size}.png`;
-    
+
     // Prüfe ob bereits ein IMG existiert, sonst erstelle eins
     let img = avatar.querySelector('img');
     if (!img) {
@@ -1856,7 +1857,7 @@ function updateListRow(row, rank, player) {
   const avatarEl = row.querySelector('.rl-avatar');
   if (avatarEl) {
     const imgUrl = `https://minotar.net/helm/${player.uuid}/36.png`;
-    
+
     // Prüfe ob bereits ein IMG existiert, sonst erstelle eins
     let img = avatarEl.querySelector('img');
     if (!img) {
@@ -1866,8 +1867,8 @@ function updateListRow(row, rank, player) {
       img.style.borderRadius = '50%';
       img.onerror = function() {
         // Fallback: Emoji anzeigen
-        const emojis = ['🏗️', '🏠', '🌆', '⚒️', '🔧', '🏡', '🌇'];
-        this.outerHTML = emojis[rank - 4] || '🎮';
+        const emojis = ['⛔', '⛔', '⛔', '⛔', '⛔', '⛔', '⛔'];
+        this.outerHTML = emojis[rank - 4] || '⛔';
       };
       avatarEl.innerHTML = '';
       avatarEl.appendChild(img);
@@ -1912,11 +1913,11 @@ function parsePlaytime(timeStr) {
   const dMatch = timeStr.match(/(\d+)d/);
   const hMatch = timeStr.match(/(\d+)h/);
   const mMatch = timeStr.match(/(\d+)m/);
-  
+
   const days = dMatch ? parseInt(dMatch[1]) : 0;
   const hours = hMatch ? parseInt(hMatch[1]) : 0;
   const minutes = mMatch ? parseInt(mMatch[1]) : 0;
-  
+
   return days * 1440 + hours * 60 + minutes;
 }
 
@@ -1924,26 +1925,21 @@ function parsePlaytime(timeStr) {
 
 // Initial laden wenn Seite fertig ist
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🚀 PlaytimeTrackerPro Auto-Sync gestartet');
+  console.log('🚀 PlaytimeTrackerPro Today-Auto-Sync gestartet');
   loadRanglisteData();
 });
 
 // Auto-Refresh alle 5 Minuten (300000ms)
-// Synchron mit dem Plugin-Export (alle 5 Min)
 setInterval(() => {
-  console.log('🔄 Rangliste wird aktualisiert...');
+  console.log('🔄 Today-Rangliste wird aktualisiert...');
   loadRanglisteData();
-}, 5 * 60 * 1000); // 5 Minuten
+}, 5 * 60 * 1000);
 
-// Optional: Auch bei Tab-Focus neu laden
+// Auch bei Tab-Focus neu laden
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) {
-    console.log('👁️ Tab wieder aktiv - Rangliste neu laden');
+    console.log('👁️ Tab wieder aktiv - Today-Rangliste neu laden');
     loadRanglisteData();
   }
 });
-
-    
-  </script>
-</body>
-</html>
+</script>
