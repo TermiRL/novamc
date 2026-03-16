@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>NovaMC – Premium Minecraft CityBuild Server | Java & Bedrock</title>
-  <meta name="description" content="NovaMC – der führende deutsche Premium CityBuild Server für Java & Bedrock. Baue epische Städte, nimm an Events teil, handle in einer fairen Wirtschaft und werde Teil unserer aktiven Community! Server-IP: novamc.one" />
-  <meta name="keywords" content="NovaMC, Minecraft CityBuild, CityBuild Server, deutscher Minecraft Server, Minecraft Java Bedrock, Premium Minecraft Server, Minecraft Community, Citybuild Events, bester Citybuild Server" />
+  <title>NovaMC – Deutscher Minecraft CityBuild Server | Java & Bedrock</title>
+  <meta name="description" content="NovaMC – deutscher Premium CityBuild Server für Java & Bedrock. Baue epische Städte, nimm an Events teil, handle in einer fairen Wirtschaft und werde Teil unserer aktiven Community! Server-IP: novamc.one" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://novamc.one/" />
 
@@ -30,8 +29,12 @@
   <link rel="apple-touch-icon" href="logo.png" />
   
   <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta name="theme-color" content="#8A2BE2" />
+  <meta name="author" content="NovaMC" />
   
   <script type="application/ld+json">
 {
@@ -75,7 +78,7 @@
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "4.9",
-        "ratingCount": "320",
+        "ratingCount": "47",
         "bestRating": "5"
       },
       "offers": {
@@ -835,6 +838,36 @@ nav.scrolled {
       .server-edition-toggle { width: 100%; }
       .edition-btn { flex: 1; justify-content: center; }
     }
+    /* ── VIDEO SLIDE CONTROLS ── */
+    .slide-video-wrap {
+      position: absolute; inset: 0;
+    }
+    .slide-video-wrap video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .video-controls {
+      position: absolute; bottom: 70px; right: 20px;
+      display: flex; gap: 8px; z-index: 10;
+    }
+    .video-ctrl-btn {
+      background: rgba(0,0,0,0.65); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; border-radius: 8px; padding: 7px 14px;
+      font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: all 0.25s ease; font-family: 'Inter', sans-serif;
+    }
+    .video-ctrl-btn:hover { background: rgba(255,215,0,0.2); border-color: var(--gold); color: var(--gold); }
+    .video-ctrl-btn.muted-off { border-color: rgba(255,215,0,0.5); color: var(--gold); }
+    /* Progress bar for video slide */
+    .video-progress-wrap {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 4px; background: rgba(255,255,255,0.15); z-index: 10;
+    }
+    .video-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--purple));
+      width: 0%; transition: none;
+    }
   </style>
 </head>
 <body>
@@ -853,6 +886,7 @@ nav.scrolled {
     <li><a href="/">Start</a></li>
     <li><a href="/features">Features</a></li>
     <li><a href="/screenshots">Bilder</a></li>
+    <li><a href="#screenshots">Galerie</a></li>
     <li><a href="/team">Team</a></li>
     <li><a href="/rangliste">Rangliste</a></li>
     <li><a href="/store">Store</a></li>
@@ -869,6 +903,7 @@ nav.scrolled {
   <a href="/" onclick="closeMenu()">Start</a>
   <a href="/features" onclick="closeMenu()">Features</a>
   <a href="/screenshots" onclick="closeMenu()">Bilder</a>
+  <a href="#screenshots" onclick="closeMenu()">Galerie</a>
   <a href="/team" onclick="closeMenu()">Team</a>
   <a href="/rangliste" onclick="closeMenu()">Rangliste</a>
   <a href="/store" onclick="closeMenu()">Store</a>
@@ -883,7 +918,7 @@ nav.scrolled {
     <div class="hero-badge"><i class="fas fa-star"></i> #1 Citybuild Server</div>
     <h1 class="hero-title">
       Willkommen auf <span class="gold-text">NovaMC</span><br />
-      Dein <span class="purple-text">Premium CityBuild Server</span>
+      Dein <span class="purple-text">deutscher Premium Minecraft CityBuild Server</span>
     </h1>
     <p class="hero-desc">
       Baue deine Stadt, schreibe Geschichte und werde Teil einer aktiven Community.
@@ -1090,7 +1125,7 @@ nav.scrolled {
     </div>
   </section>
 
-  <!-- SCREENSHOTS -->
+  <!-- ERLEBE NOVAMC / GALLERY -->
   <section id="screenshots" style="padding: 80px 5%; background: var(--bg2);">
     <div class="section-header fade-in">
       <div class="section-tag">Gallery</div>
@@ -1099,34 +1134,79 @@ nav.scrolled {
     </div>
     <div class="carousel-wrap fade-in" style="margin-top: 40px;">
       <div class="carousel-track" id="carouselTrack">
+
+        <!-- Slide 1: Stadtzentrum -->
         <div class="carousel-slide" style="background: linear-gradient(135deg,#1a0533,#0d1a2e);">
-          <div class="slide-bg" aria-hidden="true"><i class="fas fa-city" style="font-size: 8rem; color: rgba(255,215,0,0.3);"></i></div>
+          <div class="slide-bg" style="position:absolute;inset:0;">
+            <img src="media/screenshot1.png" alt="NovaMC Stadtzentrum"
+              loading="lazy"
+              style="width:100%;height:100%;object-fit:cover;"
+              onerror="this.style.display='none'" />
+            <i class="fas fa-city" aria-hidden="true"
+              style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:8rem;color:rgba(255,215,0,0.3);pointer-events:none;"></i>
+          </div>
           <div class="slide-overlay">
             <div class="slide-title">NovaMC – Das Herz des Servers</div>
-            <div class="slide-sub">Das Stadtzentrum - Legendär & Einzigartig</div>
+            <div class="slide-sub">Das Stadtzentrum – Legendär &amp; Einzigartig</div>
           </div>
         </div>
+
+        <!-- Slide 2: Grüne Viertel -->
         <div class="carousel-slide" style="background: linear-gradient(135deg,#0d2e1a,#1a1a03);">
-          <div class="slide-bg" aria-hidden="true"><i class="fas fa-tree" style="font-size: 8rem; color: rgba(74,222,128,0.3);"></i></div>
+          <div class="slide-bg" style="position:absolute;inset:0;">
+            <img src="media/screenshot2.png" alt="NovaMC Grüne Viertel und Parks"
+              loading="lazy"
+              style="width:100%;height:100%;object-fit:cover;"
+              onerror="this.style.display='none'" />
+            <i class="fas fa-tree" aria-hidden="true"
+              style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:8rem;color:rgba(74,222,128,0.3);pointer-events:none;"></i>
+          </div>
           <div class="slide-overlay">
-            <div class="slide-title">Grüne Viertel & Parks</div>
+            <div class="slide-title">Grüne Viertel &amp; Parks</div>
             <div class="slide-sub">Naturreiche Wohnviertel mit gepflegten Gärten</div>
           </div>
         </div>
+
+        <!-- Slide 3: Event-Stadion -->
         <div class="carousel-slide" style="background: linear-gradient(135deg,#2e0d0d,#1a0a2e);">
-          <div class="slide-bg" aria-hidden="true"><i class="fas fa-flag-checkered" style="font-size: 8rem; color: rgba(138,43,226,0.3);"></i></div>
+          <div class="slide-bg" style="position:absolute;inset:0;">
+            <img src="media/screenshot3.png" alt="NovaMC Event-Stadion"
+              loading="lazy"
+              style="width:100%;height:100%;object-fit:cover;"
+              onerror="this.style.display='none'" />
+            <i class="fas fa-flag-checkered" aria-hidden="true"
+              style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:8rem;color:rgba(138,43,226,0.3);pointer-events:none;"></i>
+          </div>
           <div class="slide-overlay">
             <div class="slide-title">Das Event-Stadion</div>
             <div class="slide-sub">Austragungsort für Wettbewerbe und Community-Events</div>
           </div>
         </div>
-        <div class="carousel-slide" style="background: linear-gradient(135deg,#0a1a2e,#2e0a1a);">
-          <div class="slide-bg" aria-hidden="true"><i class="fas fa-moon" style="font-size: 8rem; color: rgba(138,43,226,0.3);"></i></div>
+
+        <!-- Slide 4: Video (wartet auf ended, kein loop) -->
+        <div class="carousel-slide" style="background:#000;">
+          <div class="slide-video-wrap">
+            <video id="bgVideo" src="Video.mp4" muted playsinline></video>
+          </div>
+          <!-- Fortschrittsbalken -->
+          <div class="video-progress-wrap">
+            <div class="video-progress-bar" id="videoProgressBar"></div>
+          </div>
+          <!-- Steuerknöpfe -->
+          <div class="video-controls">
+            <button class="video-ctrl-btn" id="soundToggle" onclick="toggleVideoSound()">
+              <i class="fas fa-volume-mute" id="soundIcon"></i> Sound
+            </button>
+            <button class="video-ctrl-btn" id="pauseToggle" onclick="toggleVideoPause()">
+              <i class="fas fa-pause" id="pauseIcon"></i> Pause
+            </button>
+          </div>
           <div class="slide-overlay">
             <div class="slide-title">NovaMC bei Nacht</div>
             <div class="slide-sub">Atemberaubende Lichtshow und beleuchtete Skyline</div>
           </div>
         </div>
+
       </div>
       <button class="carousel-btn prev" onclick="moveCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
       <button class="carousel-btn next" onclick="moveCarousel(1)"><i class="fas fa-chevron-right"></i></button>
@@ -1629,17 +1709,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CAROUSEL
+// CAROUSEL (mit Video-Logik)
 // ══════════════════════════════════════════════════════════════════════════════
 
 function initCarousel() {
   let currentSlide = 0;
   const totalSlides = 4;
+  const VIDEO_SLIDE = 3; // Index des Video-Slides (0-basiert)
   const track = document.getElementById('carouselTrack');
   const dotsContainer = document.getElementById('carouselDots');
-  
+  const video = document.getElementById('bgVideo');
+  const progressBar = document.getElementById('videoProgressBar');
+
   if (!track || !dotsContainer) return;
-  
+
+  // Dots erstellen
   dotsContainer.innerHTML = '';
   for (let i = 0; i < totalSlides; i++) {
     const dot = document.createElement('button');
@@ -1647,16 +1731,104 @@ function initCarousel() {
     dot.onclick = () => goToSlide(i);
     dotsContainer.appendChild(dot);
   }
-  
+
+  let autoTimer = null;
+
+  function startAutoTimer() {
+    clearInterval(autoTimer);
+    // Beim Video-Slide kein Auto-Timer – der wartet auf ended
+    if (currentSlide !== VIDEO_SLIDE) {
+      autoTimer = setInterval(() => goToSlide(currentSlide + 1), 4500);
+    }
+  }
+
+  function stopAutoTimer() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+  }
+
   window.goToSlide = function(n) {
+    const prev = currentSlide;
     currentSlide = (n + totalSlides) % totalSlides;
     track.style.transform = `translateX(-${currentSlide * 100}%)`;
-    document.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+    document.querySelectorAll('.carousel-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === currentSlide)
+    );
+
+    if (video) {
+      if (currentSlide === VIDEO_SLIDE) {
+        // Video-Slide betreten: von vorn starten, abspielen, Auto-Timer aus
+        video.currentTime = 0;
+        video.play().catch(() => {});
+        stopAutoTimer();
+      } else {
+        // Video-Slide verlassen: Video stoppen
+        video.pause();
+        video.currentTime = 0;
+        startAutoTimer();
+      }
+    } else {
+      startAutoTimer();
+    }
+  };
+
+  window.moveCarousel = function(dir) { goToSlide(currentSlide + dir); };
+
+  // Video ended → automatisch zum nächsten Slide
+  if (video) {
+    video.addEventListener('ended', () => {
+      if (currentSlide === VIDEO_SLIDE) {
+        goToSlide(currentSlide + 1);
+      }
+    });
+
+    // Fortschrittsbalken aktualisieren
+    video.addEventListener('timeupdate', () => {
+      if (!progressBar || !video.duration) return;
+      const pct = (video.currentTime / video.duration) * 100;
+      progressBar.style.width = pct + '%';
+    });
+
+    // Fortschrittsbalken zurücksetzen wenn Video resettet
+    video.addEventListener('emptied', () => {
+      if (progressBar) progressBar.style.width = '0%';
+    });
   }
-  
-  window.moveCarousel = function(dir) { goToSlide(currentSlide + dir); }
-  
-  setInterval(() => moveCarousel(1), 4500);
+
+  // Start
+  startAutoTimer();
+}
+
+// ── Video Sound Toggle ──────────────────────────────────────────────────────
+
+function toggleVideoSound() {
+  const video = document.getElementById('bgVideo');
+  const icon  = document.getElementById('soundIcon');
+  const btn   = document.getElementById('soundToggle');
+  if (!video) return;
+  video.muted = !video.muted;
+  if (video.muted) {
+    icon.className = 'fas fa-volume-mute';
+    btn.classList.remove('muted-off');
+  } else {
+    icon.className = 'fas fa-volume-up';
+    btn.classList.add('muted-off');
+  }
+}
+
+// ── Video Pause Toggle ──────────────────────────────────────────────────────
+
+function toggleVideoPause() {
+  const video = document.getElementById('bgVideo');
+  const icon  = document.getElementById('pauseIcon');
+  if (!video) return;
+  if (video.paused) {
+    video.play().catch(() => {});
+    icon.className = 'fas fa-pause';
+  } else {
+    video.pause();
+    icon.className = 'fas fa-play';
+  }
 }
 
 
