@@ -953,10 +953,19 @@ nav.scrolled {
   <!-- STATS -->
   <section id="stats">
     <div class="stats-grid">
-      <div class="stat-card fade-in">
-        <div class="stat-icon"><i class="fas fa-users"></i></div>
-        <div class="stat-number" data-target="8" data-suffix="+">0</div>
-        <div class="stat-label">Registrierte Mitglieder</div>
+      <div class="stat-card fade-in" id="live-player-card">
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
+          <span id="live-dot" style="
+            display:inline-block; width:8px; height:8px;
+            background:#4ade80; border-radius:50%;
+            margin-left:6px; vertical-align:middle;
+            box-shadow:0 0 6px #4ade80;
+            animation: livePulse 2s ease-in-out infinite;
+          "></span>
+        </div>
+        <div class="stat-number" id="live-player-count">–</div>
+        <div class="stat-label" id="live-player-label">Spieler Online</div>
       </div>
       <div class="stat-card fade-in">
         <div class="stat-icon"><i class="fas fa-city"></i></div>
