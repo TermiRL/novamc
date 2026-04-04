@@ -817,6 +817,10 @@ nav.scrolled {
       0%, 100% { transform: translateX(-50%) translateY(0); }
       50% { transform: translateX(-50%) translateY(8px); }
     }
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
     .fade-in {
       opacity: 0; transform: translateY(24px);
       transition: opacity 0.6s ease, transform 0.6s ease;
@@ -1762,7 +1766,38 @@ function toggleVideoPause() {
     icon.className = 'fas fa-play';
   }
 }
+// ── Live Spielerzahl (mcsrvstat.us API) ──────────────────────────────────────
+async function fetchLivePlayerCount() {
+  const el = document.getElementById('live-player-count');
+  const dot = document.getElementById('live-dot');
+  const label = document.getElementById('live-player-label');
+  if (!el) return;
 
+  try {
+    const res = await fetch('https://api.mcsrvstat.us/3/novamc.one');
+    const data = await res.json();
+
+    if (data.online && data.players !== undefined) {
+      const online = data.players.online ?? 0;
+      const max = data.players.max ?? 100;
+      el.innerHTML = `${online}<span class="suffix">/${max}</span>`;
+      if (dot) { dot.style.background = '#4ade80'; dot.style.boxShadow = '0 0 6px #4ade80'; }
+      if (label) label.textContent = 'Spieler Online';
+    } else {
+      // Server offline
+      el.textContent = 'Offline';
+      if (dot) { dot.style.background = '#f87171'; dot.style.boxShadow = '0 0 6px #f87171'; dot.style.animation = 'none'; }
+      if (label) label.textContent = 'Server Offline';
+    }
+  } catch {
+    el.textContent = '?';
+    if (dot) dot.style.opacity = '0.3';
+  }
+}
+
+// Beim Laden + alle 60 Sekunden automatisch aktualisieren
+fetchLivePlayerCount();
+setInterval(fetchLivePlayerCount, 60000);
 
 </script>
 </body>
