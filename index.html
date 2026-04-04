@@ -1553,124 +1553,45 @@ function resetRangliste() {
     }
   });
 }
+// ── Heute-aktiv: Mindest-Spielzeit in Minuten (verhindert Ghost-Einträge) ──
+const MIN_TODAY_MINUTES = 5;
 
-function renderRangliste(players) {
+// Formatiert Spielzeit für den jeweiligen Modus
+// Im "today"-Modus werden Tage gestripped (max. 23h 59m)
+function formatTimeForMode(timeStr, mode) {
+  if (mode !== 'today') return timeStr;
+  const totalMinutes = parsePlaytime(timeStr);
+  const capped = Math.min(totalMinutes, 23 * 60 + 59);
+  const h = Math.floor(capped / 60);
+  const m = capped % 60;
+  return `${h}h ${m}m`;
+}
+
+function renderRangliste(players, mode = 'alltime') {
   resetRangliste();
 
-  if (!Array.isArray(players) || players.length === 0) {
-    return;
-  }
+  if (!Array.isArray(players) || players.length === 0) return;
 
-  maxPlaytimeMinutes = players.reduce((max, p) => {
-    const mins = parsePlaytime(p.playtime || '');
-    return Math.max(max, mins);
+  // Spielzeit für den aktuellen Modus korrekt formatieren
+  const prepared = players.map(p => ({
+    ...p,
+    playtime: formatTimeForMode(p.playtime || '0h 0m', mode)
+  }));
+
+  maxPlaytimeMinutes = prepared.reduce((max, p) => {
+    return Math.max(max, parsePlaytime(p.playtime || ''));
   }, 0);
 
-  if (players.length >= 1) updatePodiumPlayer(1, players[0]);
-  if (players.length >= 2) updatePodiumPlayer(2, players[1]);
-  if (players.length >= 3) updatePodiumPlayer(3, players[2]);
+  if (prepared.length >= 1) updatePodiumPlayer(1, prepared[0]);
+  if (prepared.length >= 2) updatePodiumPlayer(2, prepared[1]);
+  if (prepared.length >= 3) updatePodiumPlayer(3, prepared[2]);
 
   const listRows = document.querySelectorAll('.rl-list .rl-row');
-  for (let i = 3; i < Math.min(players.length, 10); i++) {
+  for (let i = 3; i < Math.min(prepared.length, 10); i++) {
     const rowIndex = i - 3;
     if (listRows[rowIndex]) {
-      updateListRow(listRows[rowIndex], i + 1, players[i]);
+      updateListRow(listRows[rowIndex], i + 1, prepared[i]);
     }
-  }
-}
-
-function updatePodiumPlayer(rank, player) {
-  const podiumCard = document.querySelector(`.podium-${rank}`);
-  if (!podiumCard) return;
-
-  const avatar = podiumCard.querySelector('.podium-avatar');
-  if (avatar) {
-    const size = rank === 1 ? 80 : 64;
-    const imgUrl = `https://minotar.net/helm/${player.uuid}/${size}.png`;
-
-    avatar.innerHTML = '';
-    const img = document.createElement('img');
-    img.style.width = '100%';
-    img.style.height = '100%';
-    img.style.borderRadius = '50%';
-    img.style.objectFit = 'cover';
-    img.src = imgUrl;
-    img.alt = player.name;
-    
-    img.onerror = function() {
-      const iconSize = rank === 1 ? '2.2rem' : '1.8rem';
-      const iconColor = rank === 1 ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.25)';
-      this.outerHTML = `<i class="fas fa-user-times" style="color: ${iconColor}; font-size: ${iconSize};"></i>`;
-    };
-    
-    avatar.appendChild(img);
-  }
-
-  const nameEl = podiumCard.querySelector('.podium-name');
-  if (nameEl) nameEl.textContent = player.name;
-
-  const timeEl = podiumCard.querySelector('.podium-time');
-  if (timeEl) timeEl.innerHTML = `<i class="fas fa-clock"></i> ${player.playtime}`;
-}
-
-function updateListRow(row, rank, player) {
-  row.classList.remove('empty');
-  
-  const posEl = row.querySelector('.rl-pos');
-  if (posEl) posEl.textContent = rank;
-
-  const avatarEl = row.querySelector('.rl-avatar');
-  if (avatarEl) {
-    const imgUrl = `https://minotar.net/helm/${player.uuid}/36.png`;
-    avatarEl.innerHTML = '';
-    
-    const img = document.createElement('img');
-    img.style.width = '36px';
-    img.style.height = '36px';
-    img.style.borderRadius = '50%';
-    img.src = imgUrl;
-    img.alt = player.name;
-    
-    img.onerror = function() {
-      this.outerHTML = '<i class="fas fa-user-times" style="color: var(--text-muted); opacity: 0.4; font-size: 1.2rem;"></i>';
-    };
-    
-    avatarEl.appendChild(img);
-  }
-
-  const nameEl = row.querySelector('.rl-name');
-  if (nameEl) nameEl.textContent = player.name;
-
-  const statEl = row.querySelector('.rl-stat');
-  if (statEl) statEl.innerHTML = `<i class="fas fa-clock"></i> ${player.playtime}`;
-
-  const barEl = row.querySelector('.rl-bar');
-  if (barEl) {
-    const thisMinutes = parsePlaytime(player.playtime);
-    let percentage = 100;
-    if (maxPlaytimeMinutes > 0) {
-      percentage = (thisMinutes / maxPlaytimeMinutes) * 100;
-    }
-    percentage = Math.max(10, Math.min(100, percentage));
-    barEl.style.width = '0%';
-    requestAnimationFrame(() => {
-      barEl.style.width = percentage + '%';
-    });
-  }
-}
-
-async function loadRanglisteAlltime() {
-  try {
-    const response = await fetch('https://playtime-sync.novamc26.workers.dev/top10?ts=' + Date.now());
-    if (!response.ok) {
-      resetRangliste();
-      return;
-    }
-    const players = await response.json();
-    renderRangliste(players);
-  } catch (error) {
-    console.error('❌ Fehler beim Laden der Alltime-Rangliste:', error);
-    resetRangliste();
   }
 }
 
@@ -1681,8 +1602,12 @@ async function loadRanglisteToday() {
       resetRangliste();
       return;
     }
-    const players = await response.json();
-    renderRangliste(players);
+    let players = await response.json();
+
+  
+    players = players.filter(p => parsePlaytime(p.playtime || '') >= MIN_TODAY_MINUTES);
+
+    renderRangliste(players, 'today');
   } catch (error) {
     console.error('❌ Fehler beim Laden der Today-Rangliste:', error);
     resetRangliste();
@@ -1700,7 +1625,6 @@ function switchRlTab(mode, btn) {
     loadRanglisteAlltime();
   }
 }
-
 // Auto-load beim Start
 document.addEventListener('DOMContentLoaded', () => {
   loadRanglisteAlltime();
