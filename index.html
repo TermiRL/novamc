@@ -862,7 +862,7 @@ nav.scrolled {
     }
     .video-ctrl-btn:hover { background: rgba(255,215,0,0.2); border-color: var(--gold); color: var(--gold); }
     .video-ctrl-btn.muted-off { border-color: rgba(255,215,0,0.5); color: var(--gold); }
-    /* Progress bar for video slide */
+   
     .video-progress-wrap {
       position: absolute; bottom: 0; left: 0; right: 0;
       height: 4px; background: rgba(255,255,255,0.15); z-index: 10;
@@ -877,7 +877,7 @@ nav.scrolled {
 <body>
   <canvas id="particles-canvas"></canvas>
 
-<!-- NAVBAR -->
+
 <nav id="navbar">
   <a href="/" class="nav-logo">
     <div class="logo-icon">
@@ -916,17 +916,24 @@ nav.scrolled {
 </div>
 
   <!-- HERO -->
-  <section id="hero">
-    <div class="hero-glow hero-glow-1"></div>
-    <div class="hero-glow hero-glow-2"></div>
-    <div class="hero-badge"><i class="fas fa-star"></i> #1 Citybuild Server</div>
-    <h1 class="hero-title">
-      Willkommen auf <span class="gold-text">NovaMC</span><br />
-    </h1>
-    <p class="hero-desc">
-      Baue deine Stadt, schreibe Geschichte und werde Teil einer aktiven Community.
-      Events, faire Regeln und epische Builds erwarten dich – jeden Tag.
-    </p>
+<section id="hero">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="hero-badge"><i class="fas fa-star"></i> #1 Citybuild Server</div>
+
+  <h1 class="hero-title">
+    Willkommen auf
+    <span class="gold-text">
+      Nova<span class="mc-gradient">MC</span>
+    </span><br />
+  </h1>
+
+  <p class="hero-desc">
+    Baue deine Stadt, schreibe Geschichte und werde Teil einer aktiven Community.
+    Events, faire Regeln und epische Builds erwarten dich – jeden Tag.
+  </p>
+</section>
+
     <div class="hero-buttons">
       <a href="#stats" class="btn btn-primary"><i class="fas fa-play"></i> Jetzt beitreten</a>
       <a href="http://dc.novamc.one" target="_blank" rel="noopener" class="btn btn-secondary"><i class="fab fa-discord"></i> Discord beitreten</a>
