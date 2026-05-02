@@ -740,51 +740,153 @@ nav.scrolled {
     .carousel-btn.prev { left: 16px; }
     .carousel-btn.next { right: 16px; }
 
-    /* ── TEAM ── */
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 24px; max-width: 1000px; margin: 0 auto;
+    /* ── TEAM ACCORDION ── */
+    .team-accordion {
+      max-width: 900px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 10px;
     }
-    .team-card {
+    .team-cat-wrap {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
       background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 20px; padding: 28px 20px;
-      text-align: center; transition: all 0.35s ease;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
-    .team-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 50px rgba(138,43,226,0.25);
-      border-color: rgba(138,43,226,0.4);
+    .team-cat-wrap.open {
+      border-color: rgba(var(--cat-rgb, 255,215,0), 0.28);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.25);
     }
-    .team-avatar {
-      width: 80px; height: 80px; border-radius: 50%;
-      margin: 0 auto 16px;
+    .team-cat-header {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 22px; background: none; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.25s ease;
+    }
+    .team-cat-header:hover { background: rgba(255,255,255,0.04); }
+    .cat-header-left {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .cat-icon-wrap {
+      width: 40px; height: 40px; border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; font-weight: 900; color: #000;
-      position: relative;
-      transition: box-shadow 0.35s ease;
+      font-size: 1rem; color: #000; flex-shrink: 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
     }
-    .team-card:hover .team-avatar {
-      box-shadow: 0 0 28px rgba(255,215,0,0.55);
+    .cat-title {
+      font-size: 1rem; font-weight: 700; color: var(--white);
     }
-    .team-rank {
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; padding: 3px 10px; border-radius: 50px;
-      margin-bottom: 8px; display: inline-block;
+    .cat-chev {
+      color: var(--text-muted); font-size: 0.8rem;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
     }
-    .rank-owner { background: rgba(255,215,0,0.15); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
-    .rank-admin { background: rgba(138,43,226,0.15); color: #c084fc; border: 1px solid rgba(138,43,226,0.3); }
-    .rank-supporter { background: rgba(56,189,248,0.15); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.3); }
-    .rank-builder { background: rgba(74,222,128,0.15); color: #86efac; border: 1px solid rgba(74,222,128,0.3); }
-    .rank-developer { background: rgba(37, 99, 235, 0.15); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.3); }
-    .rank-designer { background: rgba(236, 72, 153, 0.15); color: #f472b6; border: 1px solid rgba(236, 72, 153, 0.3); }
-    .rank-content { background: rgba(249, 115, 22, 0.15); color: #fb923c; border: 1px solid rgba(249, 115, 22, 0.3); }
-    .rank-moderator { background: rgba(20, 184, 166, 0.15); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.3); }
-    .team-name {
-      font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px;
+    .team-cat-wrap.open .cat-chev { transform: rotate(180deg); }
+
+    .team-cat-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
+      padding: 0 22px;
     }
-    .team-desc { font-size: 0.82rem; color: var(--text-muted); }
+    .team-cat-wrap.open .team-cat-body {
+      max-height: 1000px;
+      padding: 0 22px 20px;
+    }
+    .team-members-row {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* Member Card */
+    .team-member-card {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 12px 16px;
+      min-width: 210px; flex: 1; max-width: 260px;
+      transition: all 0.25s ease;
+    }
+    .team-member-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.13);
+      transform: translateY(-2px);
+    }
+    .member-avatar-wrap {
+      width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+      position: relative; overflow: hidden;
+      background: rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .member-avatar-img {
+      width: 100%; height: 100%; object-fit: cover;
+      border-radius: 50%; display: block;
+    }
+    .member-avatar-fallback {
+      position: absolute; inset: 0;
+      display: none; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: rgba(255,255,255,0.5);
+    }
+    .member-avatar-wrap.no-img .member-avatar-img { display: none; }
+    .member-avatar-wrap.no-img .member-avatar-fallback { display: flex; }
+    .member-name {
+      font-size: 0.95rem; font-weight: 700; color: var(--white);
+      margin-bottom: 2px;
+    }
+    .member-role { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── PARTNERS ── */
+    .partners-section {
+      max-width: 900px; margin: 80px auto 0;
+    }
+    .partners-grid {
+      display: flex; flex-wrap: wrap; gap: 20px;
+      justify-content: center;
+    }
+    .partner-card {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 12px; padding: 28px 24px; border-radius: 20px;
+      min-width: 180px; flex: 1; max-width: 240px;
+      background: linear-gradient(135deg, var(--p1, rgba(255,255,255,0.05)), var(--p2, rgba(255,255,255,0.02)));
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.35s ease; text-align: center;
+    }
+    .partner-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .partner-avatar-wrap {
+      width: 72px; height: 72px; border-radius: 50%; overflow: hidden;
+      background: rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.18);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .partner-avatar-img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;
+    }
+    .partner-avatar-fallback {
+      position: absolute; inset: 0; display: none;
+      align-items: center; justify-content: center;
+      font-size: 1.8rem; color: rgba(255,255,255,0.6);
+    }
+    .partner-avatar-wrap.no-img .partner-avatar-img { display: none; }
+    .partner-avatar-wrap.no-img .partner-avatar-fallback { display: flex; }
+    .partner-name {
+      font-size: 1.05rem; font-weight: 800;
+      color: var(--p-text, var(--white));
+    }
+    .partner-desc { font-size: 0.82rem; color: var(--p-text, var(--text-muted)); opacity: 0.75; }
+    .partner-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 600; text-decoration: none;
+      padding: 5px 14px; border-radius: 50px;
+      background: rgba(255,255,255,0.12);
+      color: var(--p-text, var(--white));
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.25s ease; margin-top: 4px;
+    }
+    .partner-link:hover { background: rgba(255,255,255,0.22); }
 
     /* ── JOIN CTA ── */
     .join-box {
@@ -1236,58 +1338,58 @@ nav.scrolled {
   <!-- TEAM -->
   <section id="team" style="padding: 100px 5%;">
     <div class="section-header fade-in">
-      <div class="section-tag">Unser Team</div>
+      <div class="section-tag">Unsere Team Rollen</div>
       <h2 class="section-title">Hinter <span>NovaMC</span></h2>
       <div class="divider"></div>
-      <p class="section-subtitle">Unser engagiertes Team arbeitet täglich daran, NovaMC so gut wie möglich zu gestalten.</p>
+      <p class="section-subtitle">Unser engagiertes Team arbeitet täglich daran, NovaMC so gut wie möglich zu gestalten. <a href="/team" style="color:var(--gold);text-decoration:none;font-weight:600;">→ Alle Mitglieder anzeigen</a></p>
     </div>
     <div class="team-grid">
       <div class="team-card fade-in">
-        <div class="team-avatar" style="background: linear-gradient(135deg,#FFD700,#e0a800);" aria-label="NovaMC Owner Avatar"><i class="fas fa-crown" style="font-size: 2rem; color: #000;"></i></div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#FFD700,#e0a800);" aria-label="Owner"><i class="fas fa-crown" style="font-size:2rem;color:#000;"></i></div>
         <span class="team-rank rank-owner">Owner</span>
-        <div class="team-name"></div>
+        <div class="team-name">Führung</div>
         <div class="team-desc">Gründer & Vision des Servers</div>
       </div>
       <div class="team-card fade-in">
-        <div class="team-avatar" style="background: linear-gradient(135deg,#8A2BE2,#5b0fa0);" aria-label="NovaMC Admin Avatar"><i class="fas fa-shield-alt" style="font-size: 2rem; color: #fff;"></i></div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#8A2BE2,#5b0fa0);" aria-label="Admin"><i class="fas fa-shield-alt" style="font-size:2rem;color:#fff;"></i></div>
         <span class="team-rank rank-admin">Admin</span>
-        <div class="team-name"></div>
+        <div class="team-name">Administration</div>
         <div class="team-desc">Regeln & Community-Pflege</div>
       </div>
       <div class="team-card fade-in">
-        <div class="team-avatar" style="background: linear-gradient(135deg,#8A2BE2,#6A0DAD);" aria-label="NovaMC Developer Avatar"><i class="fas fa-code" style="font-size: 2rem; color: #fff;"></i></div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#2563eb,#1e40af);" aria-label="Developer"><i class="fas fa-code" style="font-size:2rem;color:#fff;"></i></div>
         <span class="team-rank rank-developer">Developer</span>
-        <div class="team-name"></div>
+        <div class="team-name">Entwicklung</div>
         <div class="team-desc">Coding & Ideen-Umsetzung</div>
       </div>
       <div class="team-card fade-in">
-        <div class="team-avatar" style="background: linear-gradient(135deg,#14b8a6,#06b6d4);" aria-label="NovaMC Moderator Avatar"><i class="fas fa-gavel" style="font-size: 2rem; color: #fff;"></i></div>
-        <span class="team-rank rank-moderator">Moderator</span>
-        <div class="team-name"></div>
-        <div class="team-desc">Plugin-Hilfe & Moderation</div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#14b8a6,#0891b2);" aria-label="Moderator"><i class="fas fa-gavel" style="font-size:2rem;color:#fff;"></i></div>
+        <span class="team-rank rank-moderator">Moderatoren</span>
+        <div class="team-name">Moderation</div>
+        <div class="team-desc">Fairplay & Regeldurchsetzung</div>
       </div>
       <div class="team-card fade-in">
-        <div class="team-avatar" style="background: linear-gradient(135deg,#38bdf8,#0ea5e9);" aria-label="NovaMC Supporter Avatar"><i class="fas fa-headset" style="font-size: 2rem; color: #fff;"></i></div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);" aria-label="Supporter"><i class="fas fa-headset" style="font-size:2rem;color:#fff;"></i></div>
         <span class="team-rank rank-supporter">Supporter</span>
-        <div class="team-name"></div>
+        <div class="team-name">Support</div>
         <div class="team-desc">Spieler-Support & Hilfe</div>
       </div>
       <div class="team-card fade-in">
-        <div class="team-avatar" style="background: linear-gradient(135deg,#f97316,#ef4444);" aria-label="NovaMC Content Creator Avatar"><i class="fas fa-video" style="font-size: 2rem; color: #fff;"></i></div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#f97316,#ef4444);" aria-label="Content"><i class="fas fa-video" style="font-size:2rem;color:#fff;"></i></div>
         <span class="team-rank rank-content">Content</span>
-        <div class="team-name"></div>
+        <div class="team-name">Content Creation</div>
         <div class="team-desc">Videos & Social Media</div>
       </div>
       <div class="team-card fade-in">
-        <div class="team-avatar" style="background: linear-gradient(135deg,#4ade80,#16a34a);" aria-label="NovaMC Builder Avatar"><i class="fas fa-hammer" style="font-size: 2rem; color: #fff;"></i></div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#4ade80,#16a34a);" aria-label="Builder"><i class="fas fa-hammer" style="font-size:2rem;color:#fff;"></i></div>
         <span class="team-rank rank-builder">Builder</span>
-        <div class="team-name"></div>
+        <div class="team-name">Bauen</div>
         <div class="team-desc">Spawn & Welt-Design</div>
       </div>
       <div class="team-card fade-in">
-        <div class="team-avatar" style="background: linear-gradient(135deg,#ec4899,#d946ef);" aria-label="NovaMC Designer Avatar"><i class="fas fa-palette" style="font-size: 2rem; color: #fff;"></i></div>
+        <div class="team-avatar" style="background:linear-gradient(135deg,#ec4899,#d946ef);" aria-label="Designer"><i class="fas fa-palette" style="font-size:2rem;color:#fff;"></i></div>
         <span class="team-rank rank-designer">Designer</span>
-        <div class="team-name"></div>
+        <div class="team-name">Design</div>
         <div class="team-desc">Grafik & visuelle Konzepte</div>
       </div>
     </div>
@@ -1773,6 +1875,15 @@ function toggleVideoPause() {
     icon.className = 'fas fa-play';
   }
 }
+// ══════════════════════════════════════════════════════════════════════════════
+// TEAM KATEGORIE ACCORDION
+// ══════════════════════════════════════════════════════════════════════════════
+
+function toggleCat(btn) {
+  const wrap = btn.closest('.team-cat-wrap');
+  wrap.classList.toggle('open');
+}
+
 // ── Live Spielerzahl (mcsrvstat.us API) ──────────────────────────────────────
 async function fetchLivePlayerCount() {
   const el = document.getElementById('live-player-count');
