@@ -11,9 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    /* ══════════════════════════════════════════════════════
-       DESIGN-TOKENS (identisch mit index.html)
-    ══════════════════════════════════════════════════════ */
     :root {
       --gold: #FFD700; --gold-dark: #c8a800; --gold-light: #ffe566;
       --purple: #8A2BE2; --purple-dark: #6A0DAD;
@@ -27,8 +24,6 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 3px; }
     #particles-canvas { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; opacity:.35; }
-
-    /* ── NAVBAR ── */
     nav {
       position: fixed; top:0; left:0; right:0; z-index:1000;
       display:flex; align-items:center; justify-content:space-between;
@@ -56,162 +51,62 @@
     .mobile-menu a { color:var(--text-muted); text-decoration:none; font-size:1rem; font-weight:500; padding:12px 16px; border-radius:8px; transition:all .25s; }
     .mobile-menu a:hover { color:var(--gold); background:rgba(255,215,0,.07); }
     @media(max-width:700px) { .nav-links{display:none;} .hamburger{display:flex;} }
-
-    /* ── PAGE HERO ── */
     .page-hero {
-      position:relative; z-index:1; padding:140px 5% 70px;
-      text-align:center;
+      position:relative; z-index:1; padding:140px 5% 70px; text-align:center;
       background:radial-gradient(ellipse 70% 60% at 50% 0%, rgba(138,43,226,.18) 0%, transparent 70%);
     }
-    .page-hero-tag {
-      display:inline-block; font-size:.75rem; font-weight:700; text-transform:uppercase;
-      letter-spacing:.12em; color:var(--purple); background:rgba(138,43,226,.12);
-      border:1px solid rgba(138,43,226,.3); border-radius:50px; padding:4px 14px; margin-bottom:16px;
-    }
-    .page-hero h1 {
-      font-size:clamp(2rem,5vw,3.4rem); font-weight:900; color:var(--white); margin:0 0 14px;
-    }
-    .page-hero h1 span {
-      background:linear-gradient(90deg,var(--gold),var(--gold-light));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    }
+    .page-hero-tag { display:inline-block; font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--purple); background:rgba(138,43,226,.12); border:1px solid rgba(138,43,226,.3); border-radius:50px; padding:4px 14px; margin-bottom:16px; }
+    .page-hero h1 { font-size:clamp(2rem,5vw,3.4rem); font-weight:900; color:var(--white); margin:0 0 14px; }
+    .page-hero h1 span { background:linear-gradient(90deg,var(--gold),var(--gold-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .page-hero p { font-size:1rem; color:var(--text-muted); max-width:500px; margin:0 auto; line-height:1.7; }
     .page-divider { width:60px; height:3px; margin:18px auto; background:linear-gradient(90deg,var(--gold),var(--purple)); border-radius:2px; }
-
-    /* ── MAIN WRAPPER ── */
     main { position:relative; z-index:1; padding:0 5% 100px; max-width:1000px; margin:0 auto; }
-
-    /* ── FADE-IN ── */
     .fade-in { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
     .fade-in.visible { opacity:1; transform:translateY(0); }
-
-    /* ════════════════════════════════════════════
-       ACCORDION
-    ════════════════════════════════════════════ */
     .team-accordion { display:flex; flex-direction:column; gap:10px; }
-
-    .team-cat-wrap {
-      border-radius:16px; overflow:hidden;
-      border:1px solid rgba(255,255,255,.07); background:var(--card);
-      transition:border-color .3s, box-shadow .3s;
-    }
-    .team-cat-wrap.open {
-      border-color:rgba(var(--cat-rgb,255,215,0),.28);
-      box-shadow:0 4px 30px rgba(0,0,0,.25);
-    }
-    .team-cat-header {
-      width:100%; display:flex; align-items:center; justify-content:space-between;
-      padding:16px 22px; background:none; border:none; cursor:pointer;
-      font-family:'Inter',sans-serif; transition:background .25s;
-    }
+    .team-cat-wrap { border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.07); background:var(--card); transition:border-color .3s, box-shadow .3s; }
+    .team-cat-wrap.open { border-color:rgba(var(--cat-rgb,255,215,0),.28); box-shadow:0 4px 30px rgba(0,0,0,.25); }
+    .team-cat-header { width:100%; display:flex; align-items:center; justify-content:space-between; padding:16px 22px; background:none; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:background .25s; }
     .team-cat-header:hover { background:rgba(255,255,255,.04); }
     .cat-header-left { display:flex; align-items:center; gap:14px; }
-    .cat-icon-wrap {
-      width:40px; height:40px; border-radius:10px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:1rem; flex-shrink:0; box-shadow:0 2px 12px rgba(0,0,0,.3);
-    }
+    .cat-icon-wrap { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; box-shadow:0 2px 12px rgba(0,0,0,.3); }
     .cat-title { font-size:1rem; font-weight:700; color:var(--white); }
-    .cat-count {
-      font-size:.75rem; font-weight:700; padding:2px 10px;
-      border-radius:50px; background:rgba(255,255,255,.06);
-      color:var(--text-muted); margin-left:8px;
-    }
+    .cat-count { font-size:.75rem; font-weight:700; padding:2px 10px; border-radius:50px; background:rgba(255,255,255,.06); color:var(--text-muted); margin-left:8px; }
     .cat-chev { color:var(--text-muted); font-size:.8rem; flex-shrink:0; transition:transform .35s cubic-bezier(.4,0,.2,1); }
     .team-cat-wrap.open .cat-chev { transform:rotate(180deg); }
-
-    .team-cat-body {
-      max-height:0; overflow:hidden;
-      transition:max-height .45s cubic-bezier(.4,0,.2,1), padding .3s;
-      padding:0 22px;
-    }
+    .team-cat-body { max-height:0; overflow:hidden; transition:max-height .45s cubic-bezier(.4,0,.2,1), padding .3s; padding:0 22px; }
     .team-cat-wrap.open .team-cat-body { max-height:2000px; padding:0 22px 20px; }
-
-    .team-members-row {
-      display:flex; flex-wrap:wrap; gap:12px;
-      padding-top:14px; border-top:1px solid rgba(255,255,255,.06);
-    }
-
-    /* ── MEMBER CARD ── */
-    .team-member-card {
-      display:flex; align-items:center; gap:14px;
-      background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07);
-      border-radius:12px; padding:12px 16px;
-      min-width:200px; flex:1; max-width:255px;
-      transition:all .25s;
-    }
-    .team-member-card:hover {
-      background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.13);
-      transform:translateY(-2px);
-    }
-    .member-avatar-wrap {
-      width:48px; height:48px; border-radius:6px; flex-shrink:0;
-      position:relative; overflow:hidden;
-      background:rgba(255,255,255,.08); image-rendering:pixelated;
-    }
-    /* Minecraft skin heads are pixel art – keep crisp */
-    .member-avatar-img {
-      width:100%; height:100%; object-fit:cover;
-      border-radius:6px; display:block; image-rendering:pixelated;
-    }
-    .member-avatar-fallback {
-      position:absolute; inset:0; display:none;
-      align-items:center; justify-content:center;
-      font-size:1.3rem;
-    }
+    .team-members-row { display:flex; flex-wrap:wrap; gap:12px; padding-top:14px; border-top:1px solid rgba(255,255,255,.06); }
+    .team-member-card { display:flex; align-items:center; gap:14px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07); border-radius:12px; padding:12px 16px; min-width:200px; flex:1; max-width:255px; transition:all .25s; }
+    .team-member-card:hover { background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.13); transform:translateY(-2px); }
+    .member-avatar-wrap { width:48px; height:48px; border-radius:6px; flex-shrink:0; position:relative; overflow:hidden; background:rgba(255,255,255,.08); image-rendering:pixelated; }
+    .member-avatar-img { width:100%; height:100%; object-fit:cover; border-radius:6px; display:block; image-rendering:pixelated; }
+    .member-avatar-fallback { position:absolute; inset:0; display:none; align-items:center; justify-content:center; font-size:1.3rem; }
     .member-avatar-wrap.no-mc .member-avatar-img { display:none; }
     .member-avatar-wrap.no-mc .member-avatar-fallback { display:flex; }
     .member-name { font-size:.95rem; font-weight:700; color:var(--white); margin-bottom:2px; }
     .member-username { font-size:.75rem; color:var(--text-muted); font-family:monospace; }
-
-    /* ════════════════════════════════════════════
-       PARTNERS
-    ════════════════════════════════════════════ */
     .partners-section { margin-top:90px; }
     .section-header { text-align:center; margin-bottom:48px; }
-    .section-tag {
-      display:inline-block; font-size:.75rem; font-weight:700; text-transform:uppercase;
-      letter-spacing:.12em; color:var(--purple); background:rgba(138,43,226,.12);
-      border:1px solid rgba(138,43,226,.3); border-radius:50px; padding:4px 14px; margin-bottom:14px;
-    }
+    .section-tag { display:inline-block; font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--purple); background:rgba(138,43,226,.12); border:1px solid rgba(138,43,226,.3); border-radius:50px; padding:4px 14px; margin-bottom:14px; }
     .section-title { font-size:clamp(1.6rem,3.5vw,2.4rem); font-weight:800; color:var(--white); margin:0 0 6px; }
     .section-title span { background:linear-gradient(90deg,var(--gold),var(--gold-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .section-subtitle { font-size:.95rem; color:var(--text-muted); max-width:480px; margin:10px auto 0; line-height:1.7; }
     .divider { width:60px; height:3px; margin:14px auto 0; background:linear-gradient(90deg,var(--gold),var(--purple)); border-radius:2px; }
-
     .partners-grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
-    .partner-card {
-      display:flex; flex-direction:column; align-items:center; gap:12px;
-      padding:28px 24px; border-radius:20px;
-      min-width:180px; flex:1; max-width:230px;
-      background:linear-gradient(135deg, var(--p1,rgba(255,255,255,.05)), var(--p2,rgba(255,255,255,.02)));
-      border:1px solid rgba(255,255,255,.1); transition:all .35s; text-align:center;
-    }
+    .partner-card { display:flex; flex-direction:column; align-items:center; gap:12px; padding:28px 24px; border-radius:20px; min-width:180px; flex:1; max-width:230px; background:linear-gradient(135deg, var(--p1,rgba(255,255,255,.05)), var(--p2,rgba(255,255,255,.02))); border:1px solid rgba(255,255,255,.1); transition:all .35s; text-align:center; }
     .partner-card:hover { transform:translateY(-6px); box-shadow:0 16px 48px rgba(0,0,0,.35); border-color:rgba(255,255,255,.2); }
-    .partner-avatar-wrap {
-      width:72px; height:72px; border-radius:50%; overflow:hidden;
-      background:rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center;
-      position:relative; flex-shrink:0;
-      border:2px solid rgba(255,255,255,.18); box-shadow:0 4px 20px rgba(0,0,0,.3);
-    }
+    .partner-avatar-wrap { width:72px; height:72px; border-radius:50%; overflow:hidden; background:rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center; position:relative; flex-shrink:0; border:2px solid rgba(255,255,255,.18); box-shadow:0 4px 20px rgba(0,0,0,.3); }
     .partner-avatar-img { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
     .partner-avatar-fallback { position:absolute; inset:0; display:none; align-items:center; justify-content:center; font-size:1.8rem; }
     .partner-avatar-wrap.no-img .partner-avatar-img { display:none; }
     .partner-avatar-wrap.no-img .partner-avatar-fallback { display:flex; }
     .partner-name { font-size:1.05rem; font-weight:800; color:var(--p-text,var(--white)); }
     .partner-desc { font-size:.82rem; color:var(--p-text,var(--text-muted)); opacity:.75; }
-    .partner-link {
-      display:inline-flex; align-items:center; gap:6px;
-      font-size:.8rem; font-weight:600; text-decoration:none;
-      padding:5px 14px; border-radius:50px;
-      background:rgba(255,255,255,.12); color:var(--p-text,var(--white));
-      border:1px solid rgba(255,255,255,.2); transition:all .25s; margin-top:4px;
-    }
+    .partner-link { display:inline-flex; align-items:center; gap:6px; font-size:.8rem; font-weight:600; text-decoration:none; padding:5px 14px; border-radius:50px; background:rgba(255,255,255,.12); color:var(--p-text,var(--white)); border:1px solid rgba(255,255,255,.2); transition:all .25s; margin-top:4px; }
     .partner-link:hover { background:rgba(255,255,255,.22); }
-
-    /* ── FOOTER ── */
     footer { position:relative; z-index:1; padding:60px 5% 30px; border-top:1px solid rgba(255,255,255,.06); }
-    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; max-width:1200px; margin:0 auto 0; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; max-width:1200px; margin:0 auto; }
     @media(max-width:800px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
     @media(max-width:500px){ .footer-grid{ grid-template-columns:1fr; } }
     .footer-brand .logo-wrap { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
@@ -229,26 +124,14 @@
     .footer-bottom { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; max-width:1200px; margin:40px auto 0; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); }
     .footer-bottom p { font-size:.8rem; color:var(--text-muted); margin:0; }
     .footer-bottom span { color:var(--gold); }
-
-    /* ── BACK LINK ── */
-    .back-link {
-      display:inline-flex; align-items:center; gap:8px;
-      color:var(--text-muted); text-decoration:none; font-size:.88rem; font-weight:500;
-      padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03); transition:all .25s; margin-bottom:40px;
-    }
+    .back-link { display:inline-flex; align-items:center; gap:8px; color:var(--text-muted); text-decoration:none; font-size:.88rem; font-weight:500; padding:8px 16px; border-radius:8px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03); transition:all .25s; margin-bottom:40px; }
     .back-link:hover { color:var(--gold); border-color:rgba(255,215,0,.3); background:rgba(255,215,0,.05); }
-
-    /* ── RESPONSIVE CARDS ── */
-    @media(max-width:600px){
-      .team-member-card { max-width:100%; }
-    }
+    @media(max-width:600px){ .team-member-card { max-width:100%; } }
   </style>
 </head>
 <body>
 <canvas id="particles-canvas"></canvas>
 
-<!-- NAVBAR -->
 <nav id="navbar">
   <a href="/" class="nav-logo">
     <div class="logo-icon"><img src="logo.png" alt="NovaMC Logo" /></div>
@@ -279,7 +162,6 @@
   <a href="http://dc.novamc.one" target="_blank" rel="noopener" onclick="closeMenu()">Discord</a>
 </div>
 
-<!-- PAGE HERO -->
 <div class="page-hero">
   <div class="page-hero-tag">Unser Team</div>
   <h1>Das Team hinter <span>NovaMC</span></h1>
@@ -290,143 +172,102 @@
 <main>
   <a href="/" class="back-link fade-in"><i class="fas fa-arrow-left"></i> Zurück zur Startseite</a>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       TEAM ACCORDION
-       ───────────────────────────────────────────────────────────────
-       So fügst du ein Mitglied hinzu:
-       1. Füge ein <div class="team-member-card"> in die jeweilige Kategorie ein.
-       2. Setze data-mc-user="DeinMinecraftUsername" am card-div.
-          → Der Minecraft-Skin-Kopf wird automatisch geladen (minotar.net).
-       3. Passe .member-name und .member-username an.
-       Kein Profilbild nötig – alles passiert automatisch via Minecraft-API!
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="team-accordion">
 
     <!-- ── OWNER ── -->
     <div class="team-cat-wrap fade-in" style="--cat-rgb:255,215,0;">
       <button class="team-cat-header" onclick="toggleCat(this)">
         <div class="cat-header-left">
-          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#FFD700,#c8a800);color:#000;">
-            <i class="fas fa-crown"></i>
-          </span>
+          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#FFD700,#c8a800);color:#000;"><i class="fas fa-crown"></i></span>
           <span class="cat-title" style="color:#FFD700;">Owner</span>
-          <span class="cat-count">1</span>
+          <span class="cat-count">2</span>
         </div>
         <i class="fas fa-chevron-down cat-chev"></i>
       </button>
       <div class="team-cat-body">
         <div class="team-members-row">
 
-          <!-- ✏️  data-mc-user = Minecraft-Username -->
           <div class="team-member-card" data-mc-user="TermiMC_">
             <div class="member-avatar-wrap" style="border:2px solid rgba(255,215,0,.4);">
               <img class="member-avatar-img" src="" alt="TermiMC_" />
-              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#FFD700,#c8a800);color:#000;border-radius:6px;">
-                <i class="fas fa-crown"></i>
-              </div>
+              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#FFD700,#c8a800);color:#000;border-radius:6px;"><i class="fas fa-crown"></i></div>
             </div>
             <div class="member-info">
               <div class="member-name">TermiMC_</div>
               <div class="member-username">Gründer & Visionär</div>
             </div>
           </div>
+
           <div class="team-member-card" data-mc-user="Satteom">
-            <div class="member-avatar-wrap">
+            <div class="member-avatar-wrap" style="border:2px solid rgba(255,215,0,.4);">
               <img class="member-avatar-img" src="" alt="Satteom" />
               <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#FFD700,#c8a800);color:#000;border-radius:6px;"><i class="fas fa-crown"></i></div>
             </div>
             <div class="member-info">
               <div class="member-name">Satteom</div>
-              <div class="member-username">Gründer & Content Managment</div>
+              <div class="member-username">Gründer & Content Management</div>
             </div>
           </div>
-          <!-- Vorlage: weiteres Mitglied kopieren
-          <div class="team-member-card" data-mc-user="USERNAME">
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADMIN ── -->
+    <div class="team-cat-wrap fade-in" style="--cat-rgb:192,132,252;">
+      <button class="team-cat-header" onclick="toggleCat(this)">
+        <div class="cat-header-left">
+          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#8A2BE2,#5b0fa0);color:#fff;"><i class="fas fa-shield-alt"></i></span>
+          <span class="cat-title" style="color:#c084fc;">Admin</span>
+          <span class="cat-count">3</span>
+        </div>
+        <i class="fas fa-chevron-down cat-chev"></i>
+      </button>
+      <div class="team-cat-body">
+        <div class="team-members-row">
+
+          <div class="team-member-card" data-mc-user="TheGalitube">
             <div class="member-avatar-wrap">
-              <img class="member-avatar-img" src="" alt="USERNAME" />
-              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#FFD700,#c8a800);color:#000;border-radius:6px;"><i class="fas fa-crown"></i></div>
+              <img class="member-avatar-img" src="" alt="TheGalitube" />
+              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#8A2BE2,#5b0fa0);color:#fff;border-radius:6px;"><i class="fas fa-shield-alt"></i></div>
             </div>
             <div class="member-info">
-              <div class="member-name">Anzeigename</div>
-              <div class="member-username">Rolle / Beschreibung</div>
+              <div class="member-name">TheGalitube</div>
+              <div class="member-username">Administration & Server Management</div>
             </div>
           </div>
-          -->
+
+          <div class="team-member-card" data-mc-user="Henni9000">
+            <div class="member-avatar-wrap">
+              <img class="member-avatar-img" src="" alt="Henni9000" />
+              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#8A2BE2,#5b0fa0);color:#fff;border-radius:6px;"><i class="fas fa-shield-alt"></i></div>
+            </div>
+            <div class="member-info">
+              <div class="member-name">Henni9000</div>
+              <div class="member-username">Administration</div>
+            </div>
+          </div>
+
+          <div class="team-member-card" data-mc-user="Steelo">
+            <div class="member-avatar-wrap">
+              <img class="member-avatar-img" src="" alt="Steelo" />
+              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#8A2BE2,#5b0fa0);color:#fff;border-radius:6px;"><i class="fas fa-shield-alt"></i></div>
+            </div>
+            <div class="member-info">
+              <div class="member-name">Steelo</div>
+              <div class="member-username">Administration & Content Creation</div>
+            </div>
+          </div>
 
         </div>
       </div>
     </div>
-
-   <!-- ── ADMIN ── -->
-<div class="team-cat-wrap fade-in" style="--cat-rgb:192,132,252;">
-  <button class="team-cat-header" onclick="toggleCat(this)">
-    <div class="cat-header-left">
-      <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#8A2BE2,#5b0fa0);color:#fff;">
-        <i class="fas fa-shield-alt"></i>
-      </span>
-      <span class="cat-title" style="color:#c084fc;">Admin</span>
-      <span class="cat-count">3</span>
-    </div>
-    <i class="fas fa-chevron-down cat-chev"></i>
-  </button>
-  <div class="team-cat-body">
-    <div class="team-members-row">
-
-      <!-- Admin: TheGalitube -->
-      <div class="team-member-card" data-mc-user="TheGalitube">
-        <div class="member-avatar-wrap">
-          <img class="member-avatar-img" src="" alt="TheGalitube" />
-          <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#8A2BE2,#5b0fa0);color:#fff;border-radius:6px;">
-            <i class="fas fa-shield-alt"></i>
-          </div>
-        </div>
-        <div class="member-info">
-          <div class="member-name">TheGalitube</div>
-          <div class="member-username">Administration & Server Managment</div>
-        </div>
-      </div>
-
-      <!-- Admin: Henni9000 -->
-      <div class="team-member-card" data-mc-user="Henni9000">
-        <div class="member-avatar-wrap">
-          <img class="member-avatar-img" src="" alt="Henni9000" />
-          <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#8A2BE2,#5b0fa0);color:#fff;border-radius:6px;">
-            <i class="fas fa-shield-alt"></i>
-          </div>
-        </div>
-        <div class="member-info">
-          <div class="member-name">Henni9000</div>
-          <div class="member-username">Administration</div>
-        </div>
-      </div>
-
-      <!-- Admin: Steelo -->
-      <div class="team-member-card" data-mc-user="Steelo">
-        <div class="member-avatar-wrap">
-          <img class="member-avatar-img" src="" alt="Steelo" />
-          <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#8A2BE2,#5b0fa0);color:#fff;border-radius:6px;">
-            <i class="fas fa-shield-alt"></i>
-          </div>
-        </div>
-        <div class="member-info">
-          <div class="member-name">Steelo</div>
-          <div class="member-username">Administration & Content Creation</div>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
-</div>
-
 
     <!-- ── DEVELOPER ── -->
     <div class="team-cat-wrap fade-in" style="--cat-rgb:96,165,250;">
       <button class="team-cat-header" onclick="toggleCat(this)">
         <div class="cat-header-left">
-          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#2563eb,#1e40af);color:#fff;">
-            <i class="fas fa-code"></i>
-          </span>
+          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#2563eb,#1e40af);color:#fff;"><i class="fas fa-code"></i></span>
           <span class="cat-title" style="color:#60a5fa;">Developer</span>
           <span class="cat-count">0</span>
         </div>
@@ -434,24 +275,7 @@
       </button>
       <div class="team-cat-body">
         <div class="team-members-row">
-
-          <!-- Vorlage Developer
-          <div class="team-member-card" data-mc-user="USERNAME">
-            <div class="member-avatar-wrap">
-              <img class="member-avatar-img" src="" alt="USERNAME" />
-              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#2563eb,#1e40af);color:#fff;border-radius:6px;"><i class="fas fa-code"></i></div>
-            </div>
-            <div class="member-info">
-              <div class="member-name">Anzeigename</div>
-              <div class="member-username">Coding & Plugins</div>
-            </div>
-          </div>
-          -->
-
-          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">
-            Noch keine Developer eingetragen.
-          </div>
-
+          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">Noch keine Developer eingetragen.</div>
         </div>
       </div>
     </div>
@@ -460,9 +284,7 @@
     <div class="team-cat-wrap fade-in" style="--cat-rgb:45,212,191;">
       <button class="team-cat-header" onclick="toggleCat(this)">
         <div class="cat-header-left">
-          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#14b8a6,#0891b2);color:#fff;">
-            <i class="fas fa-gavel"></i>
-          </span>
+          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#14b8a6,#0891b2);color:#fff;"><i class="fas fa-gavel"></i></span>
           <span class="cat-title" style="color:#2dd4bf;">Moderatoren</span>
           <span class="cat-count">0</span>
         </div>
@@ -470,24 +292,7 @@
       </button>
       <div class="team-cat-body">
         <div class="team-members-row">
-
-          <!-- Vorlage Moderator
-          <div class="team-member-card" data-mc-user="USERNAME">
-            <div class="member-avatar-wrap">
-              <img class="member-avatar-img" src="" alt="USERNAME" />
-              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#14b8a6,#0891b2);color:#fff;border-radius:6px;"><i class="fas fa-gavel"></i></div>
-            </div>
-            <div class="member-info">
-              <div class="member-name">Anzeigename</div>
-              <div class="member-username">Moderation & Regeln</div>
-            </div>
-          </div>
-          -->
-
-          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">
-            Noch keine Moderatoren eingetragen.
-          </div>
-
+          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">Noch keine Moderatoren eingetragen.</div>
         </div>
       </div>
     </div>
@@ -496,29 +301,15 @@
     <div class="team-cat-wrap fade-in" style="--cat-rgb:125,211,252;">
       <button class="team-cat-header" onclick="toggleCat(this)">
         <div class="cat-header-left">
-          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#fff;">
-            <i class="fas fa-headset"></i>
-          </span>
+          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#fff;"><i class="fas fa-headset"></i></span>
           <span class="cat-title" style="color:#7dd3fc;">Supporter</span>
-          <span class="cat-count">0</span>
+          <span class="cat-count">1</span>
         </div>
         <i class="fas fa-chevron-down cat-chev"></i>
       </button>
       <div class="team-cat-body">
         <div class="team-members-row">
 
-          <!-- Vorlage Supporter
-          <div class="team-member-card" data-mc-user="USERNAME">
-            <div class="member-avatar-wrap">
-              <img class="member-avatar-img" src="" alt="USERNAME" />
-              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#fff;border-radius:6px;"><i class="fas fa-headset"></i></div>
-            </div>
-            <div class="member-info">
-              <div class="member-name">Anzeigename</div>
-              <div class="member-username">Spieler-Support & Hilfe</div>
-            </div>
-          </div>
-          -->
           <div class="team-member-card" data-mc-user="KrokettenJunkie">
             <div class="member-avatar-wrap">
               <img class="member-avatar-img" src="" alt="KrokettenJunkie" />
@@ -530,15 +321,15 @@
             </div>
           </div>
 
-
+        </div>
+      </div>
+    </div>
 
     <!-- ── CONTENT ── -->
     <div class="team-cat-wrap fade-in" style="--cat-rgb:251,146,60;">
       <button class="team-cat-header" onclick="toggleCat(this)">
         <div class="cat-header-left">
-          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#f97316,#ef4444);color:#fff;">
-            <i class="fas fa-video"></i>
-          </span>
+          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#f97316,#ef4444);color:#fff;"><i class="fas fa-video"></i></span>
           <span class="cat-title" style="color:#fb923c;">Content</span>
           <span class="cat-count">0</span>
         </div>
@@ -546,24 +337,7 @@
       </button>
       <div class="team-cat-body">
         <div class="team-members-row">
-
-          <!-- Vorlage Content
-          <div class="team-member-card" data-mc-user="USERNAME">
-            <div class="member-avatar-wrap">
-              <img class="member-avatar-img" src="" alt="USERNAME" />
-              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#f97316,#ef4444);color:#fff;border-radius:6px;"><i class="fas fa-video"></i></div>
-            </div>
-            <div class="member-info">
-              <div class="member-name">Anzeigename</div>
-              <div class="member-username">Videos & Social Media</div>
-            </div>
-          </div>
-          -->
-
-          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">
-            Noch keine Content Creator eingetragen.
-          </div>
-
+          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">Noch keine Content Creator eingetragen.</div>
         </div>
       </div>
     </div>
@@ -572,9 +346,7 @@
     <div class="team-cat-wrap fade-in" style="--cat-rgb:134,239,172;">
       <button class="team-cat-header" onclick="toggleCat(this)">
         <div class="cat-header-left">
-          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#4ade80,#16a34a);color:#fff;">
-            <i class="fas fa-hammer"></i>
-          </span>
+          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#4ade80,#16a34a);color:#fff;"><i class="fas fa-hammer"></i></span>
           <span class="cat-title" style="color:#86efac;">Builder</span>
           <span class="cat-count">0</span>
         </div>
@@ -582,24 +354,7 @@
       </button>
       <div class="team-cat-body">
         <div class="team-members-row">
-
-          <!-- Vorlage Builder
-          <div class="team-member-card" data-mc-user="USERNAME">
-            <div class="member-avatar-wrap">
-              <img class="member-avatar-img" src="" alt="USERNAME" />
-              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#4ade80,#16a34a);color:#fff;border-radius:6px;"><i class="fas fa-hammer"></i></div>
-            </div>
-            <div class="member-info">
-              <div class="member-name">Anzeigename</div>
-              <div class="member-username">Spawn & Welt-Design</div>
-            </div>
-          </div>
-          -->
-
-          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">
-            Noch keine Builder eingetragen.
-          </div>
-
+          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">Noch keine Builder eingetragen.</div>
         </div>
       </div>
     </div>
@@ -608,9 +363,7 @@
     <div class="team-cat-wrap fade-in" style="--cat-rgb:244,114,182;">
       <button class="team-cat-header" onclick="toggleCat(this)">
         <div class="cat-header-left">
-          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#ec4899,#d946ef);color:#fff;">
-            <i class="fas fa-palette"></i>
-          </span>
+          <span class="cat-icon-wrap" style="background:linear-gradient(135deg,#ec4899,#d946ef);color:#fff;"><i class="fas fa-palette"></i></span>
           <span class="cat-title" style="color:#f472b6;">Designer</span>
           <span class="cat-count">0</span>
         </div>
@@ -618,40 +371,14 @@
       </button>
       <div class="team-cat-body">
         <div class="team-members-row">
-
-          <!-- Vorlage Designer
-          <div class="team-member-card" data-mc-user="USERNAME">
-            <div class="member-avatar-wrap">
-              <img class="member-avatar-img" src="" alt="USERNAME" />
-              <div class="member-avatar-fallback" style="background:linear-gradient(135deg,#ec4899,#d946ef);color:#fff;border-radius:6px;"><i class="fas fa-palette"></i></div>
-            </div>
-            <div class="member-info">
-              <div class="member-name">Anzeigename</div>
-              <div class="member-username">Grafik & visuelle Konzepte</div>
-            </div>
-          </div>
-          -->
-
-          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">
-            Noch keine Designer eingetragen.
-          </div>
-
+          <div style="padding:16px 0; color:var(--text-muted); font-size:.85rem; font-style:italic;">Noch keine Designer eingetragen.</div>
         </div>
       </div>
     </div>
 
   </div><!-- /team-accordion -->
 
-
-  <!-- ═══════════════════════════════════════════════════════════════
-       UNSERE PARTNER
-       ───────────────────────────────────────────────────────────────
-       Partner-Karte:
-         --p1 / --p2  = Gradient-Farben (von → nach)
-         --p-text     = Textfarbe
-       Bild:          partner-avatar-img src="pfad/zum/bild.png"
-                      → kein MC-Username nötig, Bild manuell festlegen
-  ═══════════════════════════════════════════════════════════════ -->
+  <!-- PARTNER -->
   <div class="partners-section">
     <div class="section-header fade-in">
       <div class="section-tag">Kooperationen</div>
@@ -659,11 +386,12 @@
       <div class="divider"></div>
       <p class="section-subtitle">Starke Verbündete – Server und Creator, die wir gerne empfehlen.</p>
     </div>
-
     <div class="partners-grid fade-in">
 
+      <!-- IceGaming -->
       <div class="partner-card" style="--p1:rgba(220,240,255,.13);--p2:rgba(100,195,240,.07);--p-text:#a8daff;">
-        <div class="partner-avatar-wrap no-img">
+        <div class="partner-avatar-wrap">
+          <!-- Bild: partner/icegaming.png neben der HTML ablegen -->
           <img class="partner-avatar-img" src="partner/icegaming.png" alt="IceGaming"
                onerror="this.parentElement.classList.add('no-img')">
           <div class="partner-avatar-fallback"><i class="fas fa-snowflake" style="color:#9dd6f5;"></i></div>
@@ -675,11 +403,10 @@
         </a>
       </div>
 
-      <!-- ── Vorlage: weiteren Partner hinzufügen ──
+      <!-- Vorlage weiterer Partner:
       <div class="partner-card" style="--p1:rgba(255,100,100,.1);--p2:rgba(180,0,0,.05);--p-text:#ffaaaa;">
-        <div class="partner-avatar-wrap no-img">
-          <img class="partner-avatar-img" src="partner/partner2.png" alt="Partner Name"
-               onerror="this.parentElement.classList.add('no-img')">
+        <div class="partner-avatar-wrap">
+          <img class="partner-avatar-img" src="partner/partner2.png" alt="Name" onerror="this.parentElement.classList.add('no-img')">
           <div class="partner-avatar-fallback"><i class="fas fa-star" style="color:#ffaaaa;"></i></div>
         </div>
         <div class="partner-name">Partner Name</div>
@@ -695,7 +422,6 @@
 
 </main>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -747,9 +473,6 @@
 </footer>
 
 <script>
-/* ══════════════════════════════════════════════════════════════════
-   PARTICLES (identisch mit index.html)
-══════════════════════════════════════════════════════════════════ */
 (function(){
   const canvas = document.getElementById('particles-canvas');
   if (!canvas) return;
@@ -759,39 +482,20 @@
   resize(); window.addEventListener('resize', resize);
   const COLORS = ['rgba(255,215,0,', 'rgba(138,43,226,', 'rgba(200,168,255,'];
   for (let i = 0; i < 55; i++) {
-    particles.push({
-      x: Math.random()*1920, y: Math.random()*1080,
-      r: Math.random()*1.5+0.5, vy: -(Math.random()*0.3+0.05),
-      vx: (Math.random()-0.5)*0.15,
-      c: COLORS[Math.floor(Math.random()*COLORS.length)],
-      a: Math.random()*0.5+0.15
-    });
+    particles.push({ x: Math.random()*1920, y: Math.random()*1080, r: Math.random()*1.5+0.5, vy: -(Math.random()*0.3+0.05), vx: (Math.random()-0.5)*0.15, c: COLORS[Math.floor(Math.random()*COLORS.length)], a: Math.random()*0.5+0.15 });
   }
   function draw(){
     ctx.clearRect(0,0,W,H);
-    particles.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fillStyle = p.c + p.a + ')';
-      ctx.fill();
-      p.x += p.vx; p.y += p.vy;
-      if (p.y < -5) { p.y = H+5; p.x = Math.random()*W; }
-    });
+    particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fillStyle = p.c + p.a + ')'; ctx.fill(); p.x += p.vx; p.y += p.vy; if (p.y < -5) { p.y = H+5; p.x = Math.random()*W; } });
     requestAnimationFrame(draw);
   }
   draw();
 })();
 
-/* ══════════════════════════════════════════════════════════════════
-   NAVBAR SCROLL
-══════════════════════════════════════════════════════════════════ */
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
 });
 
-/* ══════════════════════════════════════════════════════════════════
-   MOBILE MENU
-══════════════════════════════════════════════════════════════════ */
 function toggleMenu(){
   document.getElementById('mobileMenu').classList.toggle('open');
   document.getElementById('hamburger').classList.toggle('open');
@@ -801,41 +505,24 @@ function closeMenu(){
   document.getElementById('hamburger').classList.remove('open');
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   ACCORDION
-══════════════════════════════════════════════════════════════════ */
 function toggleCat(btn) {
   btn.closest('.team-cat-wrap').classList.toggle('open');
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   MINECRAFT SKIN LOADER
-   – Liest data-mc-user aus jeder .team-member-card
-   – Setzt den img.src auf https://minotar.net/avatar/USERNAME/64
-   – Falls das Bild nicht lädt (falscher Username etc.) → Fallback-Icon
-══════════════════════════════════════════════════════════════════ */
 document.querySelectorAll('.team-member-card[data-mc-user]').forEach(card => {
   const username = card.dataset.mcUser;
   if (!username) return;
   const img  = card.querySelector('.member-avatar-img');
   const wrap = card.querySelector('.member-avatar-wrap');
   if (!img || !wrap) return;
-
-  // minotar.net liefert den 8x8-Kopf als PNG – pixelgenau
   img.src = `https://minotar.net/avatar/${encodeURIComponent(username)}/64`;
   img.alt = username;
-
   img.onload  = () => wrap.classList.remove('no-mc');
   img.onerror = () => wrap.classList.add('no-mc');
 });
 
-/* ══════════════════════════════════════════════════════════════════
-   FADE-IN OBSERVER
-══════════════════════════════════════════════════════════════════ */
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-  });
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
